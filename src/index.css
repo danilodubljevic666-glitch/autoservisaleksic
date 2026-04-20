@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* Tailwind v4 preflight already resets margins/padding inside @layer base.
+   Do NOT put a bare * { margin:0; padding:0 } here — unlayered CSS wins over
+   @layer utilities and wipes every Tailwind spacing class. */
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  overflow-x: hidden;
+}
+
+/* Prevent double-tap zoom and remove tap flash on mobile */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* iOS: prevent input zoom (font-size must be >= 16px) */
+input, textarea, select {
+  font-size: max(16px, 1em);
+}
