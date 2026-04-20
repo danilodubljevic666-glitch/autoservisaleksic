@@ -53,7 +53,7 @@ export default function Kontakt() {
           <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-gray-100 h-64 sm:h-80 lg:h-auto lg:min-h-[500px]">
             <iframe
               title="Auto Servis Aleksić Lokacija"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23590.765!2d18.9443!3d42.7737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134dea2e58c8f1c7%3A0x60a81e978e1e0fb!2sNik%C5%A1i%C4%87!5e0!3m2!1ssr!2sme!4v1"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1464.989072398696!2d18.958371321495807!3d42.74651462050622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134da9be9f00b685%3A0xe51765811759a936!2sAuto%20servis%20%22Aleksi%C4%87%22!5e0!3m2!1sen!2s!4v1776724377836!5m2!1sen!2s"
               width="100%"
               height="100%"
               style={{ border: 0, display: 'block' }}

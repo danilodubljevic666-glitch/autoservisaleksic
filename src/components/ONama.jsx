@@ -122,6 +122,71 @@ export default function ONama() {
           </div>
         </div>
 
+        {/* Reviews */}
+        <div className="mb-14 sm:mb-20">
+          <div className="text-center mb-10">
+            <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
+              Iskustva klijenata
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
+              Šta kažu naše mušterije
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {[
+              {
+                ime: 'Danilo Dubljevič',
+                ocjena: 5,
+                tekst: 'Odličan servis! Doveo sam Golf 6 na dijagnostiku i za sat vremena su pronašli i otklonili kvar. Profesionalan pristup, povoljna cijena. Preporučujem svima!',
+              },
+              {
+                ime: 'Marko Radusinović',
+                ocjena: 5,
+                tekst: 'Miloš je majstor svog zanata. Menjao sam trapove i amortizere — sve urađeno besprijekorno. Vozilo sada vozi kao novo. Definitivno dolazim ponovo.',
+              },
+              {
+                ime: 'Zoran Mijušković',
+                ocjena: 5,
+                tekst: 'Brza usluga i poštena cijena. Ostavio sam auto ujutru, uzeo poslijepodne potpuno servisiran. Komunikacija odlična, sve objašnjeno do detalja.',
+              },
+              {
+                ime: 'Veljko Nikčević',
+                ocjena: 5,
+                tekst: 'Već tri godine dovodim ovdje sva svoja vozila. Uvijek isti kvalitet i ljubaznost. Nema iznenađenja na računu — cijena je uvijek onakva kakva je dogovorena.',
+              },
+            ].map((r, i) => (
+              <div
+                key={i}
+                className="bg-white border-2 border-gray-200 hover:border-red-400 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3 group"
+              >
+                {/* Stars */}
+                <div className="flex gap-0.5">
+                  {Array.from({ length: r.ocjena }).map((_, j) => (
+                    <svg key={j} className="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Text */}
+                <p className="text-gray-600 group-hover:text-gray-800 text-sm leading-relaxed flex-1 transition-colors duration-300">"{r.tekst}"</p>
+
+                {/* Author */}
+                <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
+                  <div className="w-9 h-9 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    {r.ime.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-semibold text-sm">{r.ime}</p>
+                    <p className="text-gray-400 text-xs">Potvrđeni klijent</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Features grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((f, i) => (
