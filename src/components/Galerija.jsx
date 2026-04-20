@@ -4,7 +4,7 @@ const galerija = [
   {
     src: '/radionica.jpg',
     alt: 'Radionica Auto Servis Aleksić',
-    title: 'Naša Radionica',
+    title: 'Ford Focus ',
     opis: 'Moderno opremljena radionica sa svom potrebnom dijagnostičkom opremom.',
   },
   {
