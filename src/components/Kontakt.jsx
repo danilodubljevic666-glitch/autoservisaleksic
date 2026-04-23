@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { useInView } from '../hooks/useInView';
 
 export default function Kontakt() {
   const [form, setForm] = useState({ ime: '', telefon: '', poruka: '' });
   const [poslan, setPoslan] = useState(false);
   const [greska, setGreska] = useState('');
+
+  const [headingRef, headingInView] = useInView(0.3);
+  const [mapRef, mapInView] = useInView(0.15);
+  const [rightRef, rightInView] = useInView(0.1);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -32,7 +37,10 @@ export default function Kontakt() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div
+          ref={headingRef}
+          className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
+        >
           <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
             Pronađite nas
           </span>
@@ -49,8 +57,12 @@ export default function Kontakt() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10">
-          {/* Google Map — responsive height */}
-          <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-gray-100 h-64 sm:h-80 lg:h-auto lg:min-h-[500px]">
+          {/* Google Map */}
+          <div
+            ref={mapRef}
+            className={`rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-gray-100 h-64 sm:h-80 lg:h-auto lg:min-h-[500px]
+              ${mapInView ? 'anim-fade-left' : 'opacity-0'}`}
+          >
             <iframe
               title="Auto Servis Aleksić Lokacija"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1464.989072398696!2d18.958371321495807!3d42.74651462050622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134da9be9f00b685%3A0xe51765811759a936!2sAuto%20servis%20%22Aleksi%C4%87%22!5e0!3m2!1sen!2s!4v1776724377836!5m2!1sen!2s"
@@ -64,38 +76,65 @@ export default function Kontakt() {
           </div>
 
           {/* Right column */}
-          <div className="flex flex-col gap-5 sm:gap-6">
-            {/* Info cards — 2-col on xs+, 1-col on tiny */}
+          <div
+            ref={rightRef}
+            className={`flex flex-col gap-5 sm:gap-6 ${rightInView ? 'anim-fade-right' : 'opacity-0'}`}
+          >
+            {/* Info cards */}
             <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
-              <a
-                href="tel:+38269749666"
-                className="flex items-center gap-3 sm:gap-4 bg-gray-50 hover:bg-red-50 border border-gray-100 hover:border-red-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all duration-200 group"
+              {[
+                {
+                  href: 'tel:+38269749666',
+                  bg: 'bg-gray-50 hover:bg-red-50 border-gray-100 hover:border-red-200',
+                  iconBg: 'bg-red-600',
+                  label: 'Telefon',
+                  value: '+382 69 749 666',
+                  valueClass: 'text-gray-900 font-bold text-sm sm:text-base truncate',
+                  icon: (
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  ),
+                  isLink: true,
+                },
+                {
+                  iconBg: 'bg-gray-800',
+                  label: 'Adresa',
+                  value: 'Nikšić, CG',
+                  icon: (
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  ),
+                },
+              ].map((card, i) => {
+                const Tag = card.isLink ? 'a' : 'div';
+                return (
+                  <Tag
+                    key={i}
+                    {...(card.isLink ? { href: card.href } : {})}
+                    style={{ animationDelay: `${i * 80}ms` }}
+                    className={`flex items-center gap-3 sm:gap-4 border rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all duration-200 group
+                      ${card.bg || 'bg-gray-50 border-gray-100'}
+                      ${rightInView ? 'anim-fade-up' : 'opacity-0'}`}
+                  >
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 ${card.iconBg} rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 text-white ${card.isLink ? 'group-hover:scale-110 transition-transform' : ''}`}>
+                      {card.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs text-gray-500 font-medium mb-0.5">{card.label}</p>
+                      <p className={card.valueClass || 'text-gray-900 font-bold text-sm sm:text-base'}>{card.value}</p>
+                    </div>
+                  </Tag>
+                );
+              })}
+
+              <div
+                style={{ animationDelay: '160ms' }}
+                className={`flex items-center gap-3 sm:gap-4 bg-gray-50 border border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5
+                  ${rightInView ? 'anim-fade-up' : 'opacity-0'}`}
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 text-white group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs text-gray-500 font-medium mb-0.5">Telefon</p>
-                  <p className="text-gray-900 font-bold text-sm sm:text-base truncate">+382 69 749 666</p>
-                </div>
-              </a>
-
-              <div className="flex items-center gap-3 sm:gap-4 bg-gray-50 border border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 text-white">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 font-medium mb-0.5">Adresa</p>
-                  <p className="text-gray-900 font-bold text-sm sm:text-base">Nikšić, CG</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 sm:gap-4 bg-gray-50 border border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-5">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 text-white">
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -112,7 +151,9 @@ export default function Kontakt() {
                 href="https://wa.me/38269749666"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 sm:gap-4 bg-green-50 hover:bg-green-100 border border-green-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all duration-200 group"
+                style={{ animationDelay: '240ms' }}
+                className={`flex items-center gap-3 sm:gap-4 bg-green-50 hover:bg-green-100 border border-green-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 transition-all duration-200 group
+                  ${rightInView ? 'anim-fade-up' : 'opacity-0'}`}
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 text-white group-hover:scale-110 transition-transform">
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -127,7 +168,11 @@ export default function Kontakt() {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-gray-900 rounded-xl sm:rounded-2xl p-5 sm:p-7">
+            <div
+              style={{ animationDelay: '300ms' }}
+              className={`bg-gray-900 rounded-xl sm:rounded-2xl p-5 sm:p-7
+                ${rightInView ? 'anim-fade-up' : 'opacity-0'}`}
+            >
               <h3 className="text-white font-bold text-lg sm:text-xl mb-4 sm:mb-5">Pošaljite upit</h3>
 
               {poslan ? (

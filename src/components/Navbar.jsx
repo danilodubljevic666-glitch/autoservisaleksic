@@ -11,11 +11,17 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 80);
+    return () => clearTimeout(t);
   }, []);
 
   const handleNavClick = (href) => {
@@ -26,9 +32,9 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
+        ${scrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}
+        ${mounted ? 'anim-slide-down' : 'opacity-0'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
@@ -52,18 +58,22 @@ export default function Navbar() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
-            {navLinks.map((link) => (
+            {navLinks.map((link, i) => (
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className="text-gray-300 hover:text-red-500 transition-colors duration-200 font-medium text-sm tracking-wide cursor-pointer bg-transparent border-none"
+                style={{ animationDelay: `${80 + i * 60}ms` }}
+                className={`text-gray-300 hover:text-red-500 transition-colors duration-200 font-medium text-sm tracking-wide cursor-pointer bg-transparent border-none
+                  ${mounted ? 'anim-fade-up' : 'opacity-0'}`}
               >
                 {link.label}
               </button>
             ))}
             <a
               href="tel:+38269749666"
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 lg:px-5 rounded-full font-semibold text-sm transition-colors duration-200 whitespace-nowrap"
+              style={{ animationDelay: '440ms' }}
+              className={`bg-red-600 hover:bg-red-700 text-white px-4 py-2 lg:px-5 rounded-full font-semibold text-sm transition-colors duration-200 whitespace-nowrap
+                ${mounted ? 'anim-fade-up' : 'opacity-0'}`}
             >
               Pozovite nas
             </a>

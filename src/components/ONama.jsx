@@ -1,3 +1,6 @@
+import CountUp from './CountUp';
+import { useInView } from '../hooks/useInView';
+
 const features = [
   {
     icon: (
@@ -37,9 +40,13 @@ const features = [
   },
 ];
 
-import CountUp from './CountUp';
-
 export default function ONama() {
+  const [headingRef, headingInView] = useInView(0.3);
+  const [textRef, textInView] = useInView(0.15);
+  const [imgRef, imgInView] = useInView(0.15);
+  const [reviewsRef, reviewsInView] = useInView(0.05);
+  const [featuresRef, featuresInView] = useInView(0.05);
+
   return (
     <section
       id="o-nama"
@@ -48,7 +55,10 @@ export default function ONama() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div
+          ref={headingRef}
+          className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
+        >
           <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
             Ko smo mi
           </span>
@@ -61,10 +71,13 @@ export default function ONama() {
           <div className="w-14 sm:w-16 h-1 bg-red-600 mx-auto" />
         </div>
 
-        {/* Main content — stacked on mobile, side-by-side from lg */}
+        {/* Main content */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-14 sm:mb-20">
           {/* Text side */}
-          <div className="order-2 lg:order-1">
+          <div
+            ref={textRef}
+            className={`order-2 lg:order-1 ${textInView ? 'anim-fade-left' : 'opacity-0'}`}
+          >
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-5 leading-snug">
               Miloš Aleksić —{' '}
               <span className="text-red-600">stručnjak kome možete vjerovati</span>
@@ -82,23 +95,33 @@ export default function ONama() {
 
             {/* Stats pills */}
             <div className="grid grid-cols-3 gap-3 sm:gap-4">
-              <div className="flex flex-col items-center text-center bg-red-50 border border-red-100 rounded-xl px-3 py-3 sm:px-5 sm:py-4">
-                <span className="text-2xl sm:text-3xl font-extrabold text-red-600 leading-none"><CountUp to={5} duration={1200} suffix="+" /></span>
-                <span className="text-gray-600 font-medium text-xs sm:text-sm mt-1">Godina iskustva</span>
-              </div>
-              <div className="flex flex-col items-center text-center bg-gray-50 border border-gray-100 rounded-xl px-3 py-3 sm:px-5 sm:py-4">
-                <span className="text-2xl sm:text-3xl font-extrabold text-gray-800 leading-none"><CountUp to={500} duration={1800} suffix="+" /></span>
-                <span className="text-gray-600 font-medium text-xs sm:text-sm mt-1">Zadovoljnih klijenata</span>
-              </div>
-              <div className="flex flex-col items-center text-center bg-gray-50 border border-gray-100 rounded-xl px-3 py-3 sm:px-5 sm:py-4">
-                <span className="text-2xl sm:text-3xl font-extrabold text-gray-800 leading-none"><CountUp to={24} duration={1400} suffix="h" /></span>
-                <span className="text-gray-600 font-medium text-xs sm:text-sm mt-1">Hitni slučajevi</span>
-              </div>
+              {[
+                { value: 5, suffix: '+', label: 'Godina iskustva', red: true },
+                { value: 500, suffix: '+', label: 'Zadovoljnih klijenata', red: false },
+                { value: 24, suffix: 'h', label: 'Hitni slučajevi', red: false },
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  style={{ animationDelay: `${i * 100}ms` }}
+                  className={`flex flex-col items-center text-center rounded-xl px-3 py-3 sm:px-5 sm:py-4
+                    ${stat.red ? 'bg-red-50 border border-red-100' : 'bg-gray-50 border border-gray-100'}
+                    ${textInView ? 'anim-scale-in' : 'opacity-0'}`}
+                >
+                  <span className={`text-2xl sm:text-3xl font-extrabold leading-none ${stat.red ? 'text-red-600' : 'text-gray-800'}`}>
+                    <CountUp to={stat.value} duration={1200 + i * 300} suffix={stat.suffix} />
+                  </span>
+                  <span className="text-gray-600 font-medium text-xs sm:text-sm mt-1">{stat.label}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Image side — extra margin so badges don't clip on mobile */}
-          <div className="order-1 lg:order-2 relative mt-4 mb-8 sm:mt-6 sm:mb-10 lg:mt-0 lg:mb-0 mx-4 sm:mx-6 lg:mx-0">
+          {/* Image side */}
+          <div
+            ref={imgRef}
+            className={`order-1 lg:order-2 relative mt-4 mb-8 sm:mt-6 sm:mb-10 lg:mt-0 lg:mb-0 mx-4 sm:mx-6 lg:mx-0
+              ${imgInView ? 'anim-fade-right' : 'opacity-0'}`}
+          >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
               <img
                 src="/radionica.jpg"
@@ -124,7 +147,10 @@ export default function ONama() {
 
         {/* Reviews */}
         <div className="mb-14 sm:mb-20">
-          <div className="text-center mb-10">
+          <div
+            ref={reviewsRef}
+            className={`text-center mb-10 ${reviewsInView ? 'anim-fade-up' : 'opacity-0'}`}
+          >
             <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
               Iskustva klijenata
             </span>
@@ -158,7 +184,9 @@ export default function ONama() {
             ].map((r, i) => (
               <div
                 key={i}
-                className="bg-white border-2 border-gray-200 hover:border-red-400 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3 group"
+                style={{ animationDelay: `${i * 120}ms` }}
+                className={`bg-white border-2 border-gray-200 hover:border-red-400 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3 group
+                  ${reviewsInView ? 'anim-fade-up' : 'opacity-0'}`}
               >
                 {/* Stars */}
                 <div className="flex gap-0.5">
@@ -169,10 +197,8 @@ export default function ONama() {
                   ))}
                 </div>
 
-                {/* Text */}
                 <p className="text-gray-600 group-hover:text-gray-800 text-sm leading-relaxed flex-1 transition-colors duration-300">"{r.tekst}"</p>
 
-                {/* Author */}
                 <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
                   <div className="w-9 h-9 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                     {r.ime.charAt(0)}
@@ -188,11 +214,16 @@ export default function ONama() {
         </div>
 
         {/* Features grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div
+          ref={featuresRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+        >
           {features.map((f, i) => (
             <div
               key={i}
-              className="bg-gray-50 hover:bg-white border border-gray-100 hover:border-red-100 hover:shadow-lg transition-all duration-300 rounded-2xl p-5 sm:p-6 text-center group"
+              style={{ animationDelay: `${i * 100}ms` }}
+              className={`bg-gray-50 hover:bg-white border border-gray-100 hover:border-red-100 hover:shadow-lg transition-all duration-300 rounded-2xl p-5 sm:p-6 text-center group
+                ${featuresInView ? 'anim-fade-up' : 'opacity-0'}`}
             >
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-red-100 group-hover:bg-red-600 text-red-600 group-hover:text-white rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300">
                 {f.icon}

@@ -1,3 +1,5 @@
+import { useInView } from '../hooks/useInView';
+
 const footerLinks = [
   { label: 'Početna', href: '#hero' },
   { label: 'O Nama', href: '#o-nama' },
@@ -16,6 +18,8 @@ const uslugeLista = [
 ];
 
 export default function Footer() {
+  const [contentRef, contentInView] = useInView(0.05);
+
   const handleScroll = (href) => {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -26,15 +30,14 @@ export default function Footer() {
       {/* Top accent line */}
       <div className="h-1 bg-gradient-to-r from-red-700 via-red-500 to-red-700" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14 lg:py-16">
-        {/*
-          Mobile:  1 col
-          sm:      2 col
-          lg:      4 col
-        */}
+      <div
+        ref={contentRef}
+        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14 lg:py-16
+          ${contentInView ? 'anim-fade-up' : 'opacity-0'}`}
+      >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
 
-          {/* Brand — full width on mobile, spans naturally */}
+          {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-9 h-9 sm:w-10 sm:h-10 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
@@ -56,7 +59,7 @@ export default function Footer() {
             <div className="flex gap-2.5">
               <a
                 href="tel:+38269749666"
-                className="w-10 h-10 bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white rounded-lg flex items-center justify-center transition-all duration-200"
+                className="w-10 h-10 bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
                 aria-label="Pozovite nas"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,7 +70,7 @@ export default function Footer() {
                 href="https://wa.me/38269749666"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white rounded-lg flex items-center justify-center transition-all duration-200"
+                className="w-10 h-10 bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
                 aria-label="WhatsApp"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">

@@ -1,3 +1,5 @@
+import { useInView } from '../hooks/useInView';
+
 const usluge = [
   {
     icon: (
@@ -82,6 +84,10 @@ const bojaMap = {
 };
 
 export default function Usluge() {
+  const [headingRef, headingInView] = useInView(0.3);
+  const [cardsRef, cardsInView] = useInView(0.05);
+  const [ctaRef, ctaInView] = useInView(0.2);
+
   return (
     <section
       id="usluge"
@@ -90,7 +96,10 @@ export default function Usluge() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div
+          ref={headingRef}
+          className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
+        >
           <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
             Šta nudimo
           </span>
@@ -107,14 +116,19 @@ export default function Usluge() {
           </p>
         </div>
 
-        {/* Cards grid: 1 col → 2 col (sm) → 4 col (lg) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {/* Cards grid */}
+        <div
+          ref={cardsRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+        >
           {usluge.map((u, i) => {
             const c = bojaMap[u.boja];
             return (
               <article
                 key={i}
-                className={`${c.bg} border ${c.border} rounded-xl sm:rounded-2xl p-5 sm:p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group flex flex-col`}
+                style={{ animationDelay: `${i * 110}ms` }}
+                className={`${c.bg} border ${c.border} rounded-xl sm:rounded-2xl p-5 sm:p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group flex flex-col
+                  ${cardsInView ? 'anim-fade-up' : 'opacity-0'}`}
                 aria-label={u.title}
               >
                 <div className={`${c.icon} text-white w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-5 shadow-md flex-shrink-0`}>
@@ -149,7 +163,11 @@ export default function Usluge() {
         </div>
 
         {/* CTA banner */}
-        <div className="mt-10 sm:mt-14 bg-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left">
+        <div
+          ref={ctaRef}
+          className={`mt-10 sm:mt-14 bg-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left
+            ${ctaInView ? 'anim-fade-up' : 'opacity-0'}`}
+        >
           <div className="flex-1">
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">
               Niste sigurni šta vam treba?

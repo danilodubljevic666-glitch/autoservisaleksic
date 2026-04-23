@@ -30,3 +30,39 @@ a, button {
 input, textarea, select {
   font-size: max(16px, 1em);
 }
+
+/* ── Scroll-reveal & entrance animations ── */
+@keyframes kFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes kFadeLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes kFadeRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes kScaleIn {
+  from { opacity: 0; transform: scale(0.87); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes kSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade-up    { animation: kFadeUp    0.65s ease-out both; }
+.anim-fade-left  { animation: kFadeLeft  0.65s ease-out both; }
+.anim-fade-right { animation: kFadeRight 0.65s ease-out both; }
+.anim-scale-in   { animation: kScaleIn   0.55s ease-out both; }
+.anim-slide-down { animation: kSlideDown 0.45s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up, .anim-fade-left, .anim-fade-right,
+  .anim-scale-in, .anim-slide-down {
+    animation: none;
+    opacity: 1 !important;
+  }
+}

@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { useInView } from '../hooks/useInView';
 
 const galerija = [
   {
     src: '/radionica.jpg',
     alt: 'Radionica Auto Servis Aleksić',
     title: 'Ford Focus ',
-    opis: 'Moderno opremljena radionica sa svom potrebnom dijagnostičkom opremom.',
+    opis: 'Kompletan servis i dijagnostika + zamjena alansera.',
   },
   {
     src: '/golf.jpg',
@@ -41,6 +42,8 @@ const galerija = [
 
 export default function Galerija() {
   const [lightbox, setLightbox] = useState(null);
+  const [headingRef, headingInView] = useInView(0.3);
+  const [gridRef, gridInView] = useInView(0.05);
 
   return (
     <section
@@ -50,7 +53,10 @@ export default function Galerija() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div
+          ref={headingRef}
+          className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
+        >
           <span className="inline-block text-red-500 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
             Naš rad
           </span>
@@ -68,11 +74,16 @@ export default function Galerija() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+        >
           {galerija.map((item, i) => (
             <button
               key={i}
-              className="group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer text-left w-full focus:outline-none focus:ring-2 focus:ring-red-500"
+              style={{ animationDelay: `${i * 100}ms` }}
+              className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer text-left w-full focus:outline-none focus:ring-2 focus:ring-red-500
+                ${gridInView ? 'anim-scale-in' : 'opacity-0'}`}
               onClick={() => setLightbox(item)}
               aria-label={`Povećaj sliku: ${item.title}`}
             >
@@ -85,13 +96,13 @@ export default function Galerija() {
                 />
               </div>
 
-              {/* Hover overlay — hidden on touch, shown on hover/focus */}
+              {/* Hover overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 sm:p-5">
                 <h3 className="text-white font-bold text-base sm:text-lg mb-1">{item.title}</h3>
                 <p className="text-gray-300 text-xs sm:text-sm leading-snug">{item.opis}</p>
               </div>
 
-              {/* Always-visible bottom label */}
+              {/* Always-visible label */}
               <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-3 group-hover:opacity-0 transition-opacity duration-300">
                 <h3 className="text-white font-semibold text-xs sm:text-sm">{item.title}</h3>
               </div>
@@ -103,14 +114,14 @@ export default function Galerija() {
       {/* Lightbox */}
       {lightbox && (
         <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-3 sm:p-4"
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-3 sm:p-4 anim-fade-up"
           onClick={() => setLightbox(null)}
           role="dialog"
           aria-modal="true"
           aria-label={lightbox.title}
         >
           <div
-            className="max-w-4xl w-full bg-gray-900 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl"
+            className="max-w-4xl w-full bg-gray-900 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl anim-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative">
