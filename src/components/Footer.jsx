@@ -1,23 +1,10 @@
 import { useInView } from '../hooks/useInView';
-
-const footerLinks = [
-  { label: 'Početna', href: '#hero' },
-  { label: 'O Nama', href: '#o-nama' },
-  { label: 'Galerija', href: '#galerija' },
-  { label: 'Usluge', href: '#usluge' },
-  { label: 'Kontakt', href: '#kontakt' },
-];
-
-const uslugeLista = [
-  'Mehanika vozila',
-  'Kompjuterska dijagnostika',
-  'Redovni servisi',
-  'Popravka trapova',
-  'Zamjena kočnica',
-  'Geometrija točkova',
-];
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+  const footerLinks = t.nav.links;
+  const uslugeLista = t.footer.servicesList;
   const [contentRef, contentInView] = useInView(0.05);
 
   const handleScroll = (href) => {
@@ -48,19 +35,18 @@ export default function Footer() {
                 </svg>
               </div>
               <div>
-                <span className="text-white font-bold text-base sm:text-lg leading-none block">Auto Servis</span>
+                <span className="text-white font-bold text-base sm:text-lg leading-none block">{t.common.brandLine1}</span>
                 <span className="text-red-500 font-bold text-base sm:text-lg leading-none block">Aleksić</span>
               </div>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-5 max-w-xs">
-              Profesionalni auto servis u Nikšiću. Više od 5 godina iskustva.
-              Vlasnik Miloš Aleksić. Vaše vozilo u sigurnim rukama.
+              {t.footer.brandDesc}
             </p>
             <div className="flex gap-2.5">
               <a
                 href="tel:+38269749666"
                 className="w-10 h-10 bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
-                aria-label="Pozovite nas"
+                aria-label={t.footer.callAria}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -82,7 +68,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-white font-semibold text-xs uppercase tracking-widest mb-4">Navigacija</h4>
+            <h4 className="text-white font-semibold text-xs uppercase tracking-widest mb-4">{t.footer.navHeading}</h4>
             <ul className="space-y-2.5">
               {footerLinks.map((link) => (
                 <li key={link.href}>
@@ -99,7 +85,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-semibold text-xs uppercase tracking-widest mb-4">Usluge</h4>
+            <h4 className="text-white font-semibold text-xs uppercase tracking-widest mb-4">{t.footer.servicesHeading}</h4>
             <ul className="space-y-2.5">
               {uslugeLista.map((u) => (
                 <li key={u}>
@@ -116,7 +102,7 @@ export default function Footer() {
 
           {/* Contact info */}
           <div>
-            <h4 className="text-white font-semibold text-xs uppercase tracking-widest mb-4">Kontakt</h4>
+            <h4 className="text-white font-semibold text-xs uppercase tracking-widest mb-4">{t.footer.contactHeading}</h4>
             <ul className="space-y-3.5">
               <li>
                 <a href="tel:+38269749666" className="flex items-start gap-3 text-sm hover:text-white transition-colors">
@@ -126,14 +112,14 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3 text-sm">
                 <span className="text-red-500 flex-shrink-0">📍</span>
-                <span>Nikšić, Crna Gora</span>
+                <span>{t.footer.addressText}</span>
               </li>
               <li className="flex items-start gap-3 text-sm">
                 <span className="text-red-500 flex-shrink-0 mt-0.5">⏰</span>
                 <span>
-                  Pon–Pet: 08:00–17:00<br />
-                  Subota: 08:00–14:00<br />
-                  <span className="text-gray-600">Nedjelja: Zatvoreno</span>
+                  {t.footer.hoursWeek}<br />
+                  {t.footer.hoursSat}<br />
+                  <span className="text-gray-600">{t.footer.hoursSun}</span>
                 </span>
               </li>
             </ul>
@@ -145,10 +131,10 @@ export default function Footer() {
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
           <p className="text-gray-600 text-xs sm:text-sm">
-            © {new Date().getFullYear()} Auto Servis Aleksić. Sva prava zadržana.
+            © {new Date().getFullYear()} Auto Servis Aleksić. {t.footer.copyright}
           </p>
           <p className="text-gray-700 text-xs">
-            Nikšić, Crna Gora — +382 69 749 666
+            {t.footer.bottomLocation}
           </p>
         </div>
       </div>

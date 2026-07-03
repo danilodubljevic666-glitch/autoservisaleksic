@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Kontakt() {
+  const { t } = useLanguage();
   const [form, setForm] = useState({ ime: '', telefon: '', poruka: '' });
   const [poslan, setPoslan] = useState(false);
   const [greska, setGreska] = useState('');
@@ -18,12 +20,10 @@ export default function Kontakt() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.ime.trim() || !form.telefon.trim() || !form.poruka.trim()) {
-      setGreska('Molimo popunite sva polja.');
+      setGreska(t.kontakt.errorRequired);
       return;
     }
-    const msg = encodeURIComponent(
-      `Pozdrav! Moje ime je ${form.ime}. ${form.poruka} Kontakt: ${form.telefon}`
-    );
+    const msg = encodeURIComponent(t.kontakt.whatsappMessage(form.ime, form.poruka, form.telefon));
     window.open(`https://wa.me/38269749666?text=${msg}`, '_blank');
     setPoslan(true);
     setForm({ ime: '', telefon: '', poruka: '' });
@@ -42,17 +42,17 @@ export default function Kontakt() {
           className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
         >
           <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
-            Pronađite nas
+            {t.kontakt.kicker}
           </span>
           <h2
             id="kontakt-heading"
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-5"
           >
-            Lokacija & Kontakt
+            {t.kontakt.heading}
           </h2>
           <div className="w-14 sm:w-16 h-1 bg-red-600 mx-auto mb-5" />
           <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base lg:text-lg px-2">
-            Posjetite nas u Nikšiću ili nas kontaktirajte putem telefona. Uvijek smo tu za Vas.
+            {t.kontakt.intro}
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export default function Kontakt() {
               ${mapInView ? 'anim-fade-left' : 'opacity-0'}`}
           >
             <iframe
-              title="Auto Servis Aleksić Lokacija"
+              title={t.kontakt.mapTitle}
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1464.989072398696!2d18.958371321495807!3d42.74651462050622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134da9be9f00b685%3A0xe51765811759a936!2sAuto%20servis%20%22Aleksi%C4%87%22!5e0!3m2!1sen!2s!4v1776724377836!5m2!1sen!2s"
               width="100%"
               height="100%"
@@ -87,7 +87,7 @@ export default function Kontakt() {
                   href: 'tel:+38269749666',
                   bg: 'bg-gray-50 hover:bg-red-50 border-gray-100 hover:border-red-200',
                   iconBg: 'bg-red-600',
-                  label: 'Telefon',
+                  label: t.kontakt.phoneLabel,
                   value: '+382 69 749 666',
                   valueClass: 'text-gray-900 font-bold text-sm sm:text-base truncate',
                   icon: (
@@ -99,8 +99,8 @@ export default function Kontakt() {
                 },
                 {
                   iconBg: 'bg-gray-800',
-                  label: 'Adresa',
-                  value: 'Nikšić, CG',
+                  label: t.kontakt.addressLabel,
+                  value: t.kontakt.addressValue,
                   icon: (
                     <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -141,9 +141,9 @@ export default function Kontakt() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 font-medium mb-0.5">Radno Vrijeme</p>
-                  <p className="text-gray-900 font-bold text-xs sm:text-sm">Pon–Pet: 08:00–17:00</p>
-                  <p className="text-gray-900 font-bold text-xs sm:text-sm">Sub: 08:00–14:00</p>
+                  <p className="text-xs text-gray-500 font-medium mb-0.5">{t.kontakt.workHoursLabel}</p>
+                  <p className="text-gray-900 font-bold text-xs sm:text-sm">{t.kontakt.workHoursWeek}</p>
+                  <p className="text-gray-900 font-bold text-xs sm:text-sm">{t.kontakt.workHoursSat}</p>
                 </div>
               </div>
 
@@ -161,8 +161,8 @@ export default function Kontakt() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 font-medium mb-0.5">WhatsApp</p>
-                  <p className="text-green-700 font-bold text-sm sm:text-base">Pišite nam</p>
+                  <p className="text-xs text-gray-500 font-medium mb-0.5">{t.kontakt.whatsappLabel}</p>
+                  <p className="text-green-700 font-bold text-sm sm:text-base">{t.kontakt.whatsappCta}</p>
                 </div>
               </a>
             </div>
@@ -173,18 +173,18 @@ export default function Kontakt() {
               className={`bg-gray-900 rounded-xl sm:rounded-2xl p-5 sm:p-7
                 ${rightInView ? 'anim-fade-up' : 'opacity-0'}`}
             >
-              <h3 className="text-white font-bold text-lg sm:text-xl mb-4 sm:mb-5">Pošaljite upit</h3>
+              <h3 className="text-white font-bold text-lg sm:text-xl mb-4 sm:mb-5">{t.kontakt.formHeading}</h3>
 
               {poslan ? (
                 <div className="text-center py-6 sm:py-8">
                   <div className="text-4xl sm:text-5xl mb-3">✅</div>
-                  <p className="text-green-400 font-semibold text-base sm:text-lg">Poruka je uspješno poslana!</p>
-                  <p className="text-gray-400 text-sm mt-2">Kontaktiraćemo Vas uskoro.</p>
+                  <p className="text-green-400 font-semibold text-base sm:text-lg">{t.kontakt.successTitle}</p>
+                  <p className="text-gray-400 text-sm mt-2">{t.kontakt.successSubtitle}</p>
                   <button
                     onClick={() => setPoslan(false)}
                     className="mt-4 sm:mt-5 text-sm text-gray-400 hover:text-white underline"
                   >
-                    Pošalji novu poruku
+                    {t.kontakt.sendNew}
                   </button>
                 </div>
               ) : (
@@ -192,7 +192,7 @@ export default function Kontakt() {
                   <div className="flex flex-col gap-3 sm:gap-4">
                     <div>
                       <label htmlFor="ime" className="block text-gray-400 text-xs sm:text-sm font-medium mb-1.5">
-                        Vaše ime *
+                        {t.kontakt.nameLabel}
                       </label>
                       <input
                         id="ime"
@@ -200,7 +200,7 @@ export default function Kontakt() {
                         type="text"
                         value={form.ime}
                         onChange={handleChange}
-                        placeholder="Npr. Marko Nikolić"
+                        placeholder={t.kontakt.namePlaceholder}
                         className="w-full bg-gray-800 text-white rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-700 focus:outline-none focus:border-red-500 placeholder-gray-600 transition-colors text-sm sm:text-base"
                         required
                       />
@@ -208,7 +208,7 @@ export default function Kontakt() {
 
                     <div>
                       <label htmlFor="telefon" className="block text-gray-400 text-xs sm:text-sm font-medium mb-1.5">
-                        Telefon *
+                        {t.kontakt.phoneFieldLabel}
                       </label>
                       <input
                         id="telefon"
@@ -216,7 +216,7 @@ export default function Kontakt() {
                         type="tel"
                         value={form.telefon}
                         onChange={handleChange}
-                        placeholder="+382 XX XXX XXX"
+                        placeholder={t.kontakt.phonePlaceholder}
                         className="w-full bg-gray-800 text-white rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-700 focus:outline-none focus:border-red-500 placeholder-gray-600 transition-colors text-sm sm:text-base"
                         required
                       />
@@ -224,7 +224,7 @@ export default function Kontakt() {
 
                     <div>
                       <label htmlFor="poruka" className="block text-gray-400 text-xs sm:text-sm font-medium mb-1.5">
-                        Poruka / Opis kvara *
+                        {t.kontakt.messageLabel}
                       </label>
                       <textarea
                         id="poruka"
@@ -232,7 +232,7 @@ export default function Kontakt() {
                         value={form.poruka}
                         onChange={handleChange}
                         rows={3}
-                        placeholder="Opišite problem sa vozilom ili uslugu koja Vam je potrebna..."
+                        placeholder={t.kontakt.messagePlaceholder}
                         className="w-full bg-gray-800 text-white rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-700 focus:outline-none focus:border-red-500 placeholder-gray-600 transition-colors resize-none text-sm sm:text-base"
                         required
                       />
@@ -246,11 +246,11 @@ export default function Kontakt() {
                       type="submit"
                       className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-red-900/30 text-sm sm:text-base"
                     >
-                      Pošalji poruku →
+                      {t.kontakt.submitBtn}
                     </button>
 
                     <p className="text-gray-600 text-xs text-center">
-                      Forma šalje poruku putem WhatsApp-a. Možete nas i direktno pozvati.
+                      {t.kontakt.formNote}
                     </p>
                   </div>
                 </form>

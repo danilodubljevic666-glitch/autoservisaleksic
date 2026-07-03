@@ -1,49 +1,23 @@
 import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
+import { useLanguage } from '../i18n/LanguageContext';
 
-const galerija = [
-  {
-    src: '/radionica.jpg',
-    alt: 'Radionica Auto Servis Aleksić',
-    title: 'Ford Focus ',
-    opis: 'Kompletan servis i dijagnostika + zamjena alansera.',
-  },
-  {
-    src: '/golf.jpg',
-    alt: 'Servis Volkswagen Golf 6',
-    title: 'Servis VW Golf 6',
-    opis: 'Kompletno servisiranje Volkswagen Golf 6 — zamjena ulja, filtera i provjera svih sistema.',
-  },
-  {
-    src: '/audi1.jpg',
-    alt: 'Dijagnostika Audi',
-    title: 'Dijagnostika Audi A4',
-    opis: 'Kompjuterska dijagnostika Audi A4 — očitavanje grešaka i kalibracija elektronskih sistema.',
-  },
-  {
-    src: '/opelastra.jpg',
-    alt: 'Servis Opel Astra',
-    title: 'Servis Opel Astra',
-    opis: 'Redovni godišnji servis Opel Astra — pregled trapova, kočnica i kompletnog vozila.',
-  },
-  {
-    src: '/renault.jpg',
-    alt: 'Servis Renault',
-    title: 'Servis Renault',
-    opis: 'Kompletno servisiranje Renault vozila — dijagnostika, zamjena ulja i pregled sistema kočenja.',
-  },
-  {
-    src: '/ford-tranzit.jpg',
-    alt: 'Servis Ford Transit',
-    title: 'Servis Ford Transit',
-    opis: 'Servis i popravka Ford Transit — motora, mjenjača i kompletnog sistema dostavnog vozila.',
-  },
+const galerijaSrc = [
+  '/radionica.jpg',
+  '/golf.jpg',
+  '/audi1.jpg',
+  '/opelastra.jpg',
+  '/renault.jpg',
+  '/ford-tranzit.jpg',
 ];
 
 export default function Galerija() {
+  const { t } = useLanguage();
   const [lightbox, setLightbox] = useState(null);
   const [headingRef, headingInView] = useInView(0.3);
   const [gridRef, gridInView] = useInView(0.05);
+
+  const galerija = t.galerija.items.map((item, i) => ({ ...item, src: galerijaSrc[i] }));
 
   return (
     <section
@@ -58,18 +32,17 @@ export default function Galerija() {
           className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
         >
           <span className="inline-block text-red-500 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
-            Naš rad
+            {t.galerija.kicker}
           </span>
           <h2
             id="galerija-heading"
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-5"
           >
-            Galerija Radova
+            {t.galerija.heading}
           </h2>
           <div className="w-14 sm:w-16 h-1 bg-red-600 mx-auto mb-5" />
           <p className="text-gray-400 max-w-xl mx-auto text-sm sm:text-base lg:text-lg px-2">
-            Pogledajte neke od radova koje smo obavili u našoj radionici.
-            Svaki posao radimo s pažnjom i profesionalizmom.
+            {t.galerija.intro}
           </p>
         </div>
 
@@ -85,7 +58,7 @@ export default function Galerija() {
               className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer text-left w-full focus:outline-none focus:ring-2 focus:ring-red-500
                 ${gridInView ? 'anim-scale-in' : 'opacity-0'}`}
               onClick={() => setLightbox(item)}
-              aria-label={`Povećaj sliku: ${item.title}`}
+              aria-label={t.galerija.zoomLabel(item.title)}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -98,7 +71,7 @@ export default function Galerija() {
 
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 sm:p-5">
-                <h3 className="text-white font-bold text-base sm:text-lg mb-1">{item.title}</h3>
+                <p className="text-white font-bold text-base sm:text-lg mb-1">{item.title}</p>
                 <p className="text-gray-300 text-xs sm:text-sm leading-snug">{item.opis}</p>
               </div>
 
@@ -133,7 +106,7 @@ export default function Galerija() {
               <button
                 onClick={() => setLightbox(null)}
                 className="absolute top-3 right-3 bg-black/60 text-white rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center hover:bg-red-600 transition-colors text-sm"
-                aria-label="Zatvori"
+                aria-label={t.galerija.closeLabel}
               >
                 ✕
               </button>

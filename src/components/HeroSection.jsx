@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import CountUp from './CountUp';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const images = ['/golf.jpg', '/audi1.jpg', '/peugeot.jpg', '/opel.jpg'];
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
   const [mounted, setMounted] = useState(false);
 
@@ -24,7 +26,7 @@ export default function HeroSection() {
       id="hero"
       className="relative w-full overflow-hidden"
       style={{ height: '100svh', minHeight: '560px' }}
-      aria-label="Hero sekcija"
+      aria-label={t.hero.ariaLabel}
     >
       {/* Background images */}
       {images.map((src, i) => (
@@ -48,7 +50,7 @@ export default function HeroSection() {
           className={`inline-block bg-red-600 text-white text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5
             ${mounted ? 'anim-slide-down' : 'opacity-0'}`}
         >
-          Nikšić, Crna Gora
+          {t.hero.badge}
         </span>
 
         <h1
@@ -56,7 +58,7 @@ export default function HeroSection() {
           className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white mb-4 leading-tight drop-shadow-lg
             ${mounted ? 'anim-fade-up' : 'opacity-0'}`}
         >
-          Auto Servis
+          {t.common.brandLine1}
           <span className="text-red-500 block">Aleksić</span>
         </h1>
 
@@ -65,7 +67,7 @@ export default function HeroSection() {
           className={`text-gray-200 text-base sm:text-lg md:text-xl mb-10 font-light px-2
             ${mounted ? 'anim-fade-up' : 'opacity-0'}`}
         >
-          Profesionalni servis vozila u Nikšiću
+          {t.hero.subtitle}
         </p>
 
         <div
@@ -81,7 +83,7 @@ export default function HeroSection() {
             }}
             className="inline-flex items-center bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold px-7 py-3.5 rounded-full text-base transition-all duration-200 shadow-lg hover:shadow-red-600/30 hover:scale-105"
           >
-            Zakažite Servis
+            {t.hero.ctaPrimary}
           </a>
           <a
             href="#usluge"
@@ -91,7 +93,7 @@ export default function HeroSection() {
             }}
             className="inline-flex items-center border-2 border-white text-white hover:bg-white hover:text-gray-900 active:bg-gray-100 font-bold px-7 py-3.5 rounded-full text-base transition-all duration-200"
           >
-            Naše Usluge
+            {t.hero.ctaSecondary}
           </a>
         </div>
       </div>
@@ -105,7 +107,7 @@ export default function HeroSection() {
             className={`transition-all duration-300 rounded-full ${
               i === current ? 'bg-red-500 w-6 sm:w-8 h-2' : 'bg-white/40 hover:bg-white/70 w-2 h-2'
             }`}
-            aria-label={`Slajd ${i + 1}`}
+            aria-label={t.hero.slideLabel(i + 1)}
           />
         ))}
       </div>
@@ -121,19 +123,19 @@ export default function HeroSection() {
             <p className="text-red-500 font-extrabold text-xl sm:text-2xl md:text-3xl leading-none">
               <CountUp to={5} duration={1200} suffix="+" />
             </p>
-            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">Godina iskustva</p>
+            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">{t.hero.stats.years}</p>
           </div>
           <div>
             <p className="text-red-500 font-extrabold text-xl sm:text-2xl md:text-3xl leading-none">
               <CountUp to={500} duration={1800} suffix="+" />
             </p>
-            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">Zadovoljnih klijenata</p>
+            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">{t.hero.stats.clients}</p>
           </div>
           <div>
             <p className="text-red-500 font-extrabold text-xl sm:text-2xl md:text-3xl leading-none">
               <CountUp to={24} duration={1400} suffix="h" />
             </p>
-            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">Dostupnost</p>
+            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">{t.hero.stats.availability}</p>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import Galerija from './components/Galerija';
 import Usluge from './components/Usluge';
 import Kontakt from './components/Kontakt';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import './index.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Kontakt />
       </main>
       <Footer />
+      <ScrollToTop />
     </>
   );
 }

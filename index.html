@@ -3,21 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dc2626" />
 
     <!-- SEO Meta Tags -->
     <title>Auto Servis Aleksić | Mehanika, Dijagnostika, Servisi – Nikšić</title>
     <meta name="description" content="Auto Servis Aleksić u Nikšiću nudi profesionalnu mehaniku, dijagnostiku, servisiranje vozila i popravku trapova. Više od 5 godina iskustva. Vlasnik Miloš Aleksić." />
-    <meta name="keywords" content="auto servis, servis automobila, mehanika, dijagnostika, trapovi, servisi, Nikšić, Aleksić" />
+    <meta name="keywords" content="auto servis, servis automobila, mehanika, dijagnostika, trapovi, servisi, Nikšić, Aleksić, auto servis Nikšić, car service Niksic" />
     <meta name="author" content="Auto Servis Aleksić" />
     <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
     <link rel="canonical" href="https://autoservisaleksic.me/" />
+
+    <!-- Local SEO -->
+    <meta name="geo.region" content="ME" />
+    <meta name="geo.placename" content="Nikšić" />
+    <meta name="geo.position" content="42.74651462050622;18.958371321495807" />
+    <meta name="ICBM" content="42.74651462050622, 18.958371321495807" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="business.business" />
+    <meta property="og:site_name" content="Auto Servis Aleksić" />
     <meta property="og:title" content="Auto Servis Aleksić | Nikšić" />
     <meta property="og:description" content="Profesionalni auto servis u Nikšiću. Mehanika, dijagnostika, servisi i trapovi. Vlasnik Miloš Aleksić." />
-    <meta property="og:image" content="/radionica.jpg" />
+    <meta property="og:image" content="https://autoservisaleksic.me/radionica.jpg" />
     <meta property="og:url" content="https://autoservisaleksic.me/" />
     <meta property="og:locale" content="sr_ME" />
 
@@ -25,26 +35,121 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Auto Servis Aleksić | Nikšić" />
     <meta name="twitter:description" content="Profesionalni auto servis u Nikšiću. Mehanika, dijagnostika, servisi i trapovi." />
-    <meta name="twitter:image" content="/radionica.jpg" />
+    <meta name="twitter:image" content="https://autoservisaleksic.me/radionica.jpg" />
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "AutoRepair",
+      "@id": "https://autoservisaleksic.me/#business",
       "name": "Auto Servis Aleksić",
+      "url": "https://autoservisaleksic.me/",
       "description": "Profesionalni auto servis u Nikšiću. Mehanika, dijagnostika, servisi i trapovi.",
+      "image": [
+        "https://autoservisaleksic.me/radionica.jpg",
+        "https://autoservisaleksic.me/golf.jpg",
+        "https://autoservisaleksic.me/audi1.jpg"
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Nikšić",
         "addressCountry": "ME"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 42.74651462050622,
+        "longitude": 18.958371321495807
+      },
       "telephone": "+38269749666",
-      "openingHours": "Mo-Fr 08:00-17:00, Sa 08:00-14:00",
+      "areaServed": "Nikšić",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "08:00",
+          "closes": "14:00"
+        }
+      ],
       "priceRange": "$$",
       "founder": {
         "@type": "Person",
         "name": "Miloš Aleksić"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "4"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Danilo Dubljevič" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Odličan servis! Doveo sam Golf 6 na dijagnostiku i za sat vremena su pronašli i otklonili kvar. Profesionalan pristup, povoljna cijena. Preporučujem svima!"
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Marko Radusinović" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Miloš je majstor svog zanata. Menjao sam trapove i amortizere — sve urađeno besprijekorno. Vozilo sada vozi kao novo. Definitivno dolazim ponovo."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Zoran Mijušković" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Brza usluga i poštena cijena. Ostavio sam auto ujutru, uzeo poslijepodne potpuno servisiran. Komunikacija odlična, sve objašnjeno do detalja."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Veljko Nikčević" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Već tri godine dovodim ovdje sva svoja vozila. Uvijek isti kvalitet i ljubaznost. Nema iznenađenja na računu — cijena je uvijek onakva kakva je dogovorena."
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Usluge",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Mehanika",
+              "description": "Popravka i zamjena svih mehaničkih dijelova"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Dijagnostika",
+              "description": "Kompjuterska dijagnostika svih sistema vozila"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Servisi",
+              "description": "Redovni i vanredni servisni pregledi"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Trapovi",
+              "description": "Popravka i podešavanje sistema vožnje"
+            }
+          }
+        ]
       }
     }
     </script>
@@ -56,6 +161,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>Auto Servis Aleksić — Nikšić</h1>
+      <p>
+        Profesionalni auto servis u Nikšiću. Mehanika, dijagnostika, servisi i popravka trapova.
+        Vlasnik Miloš Aleksić. Telefon: +382 69 749 666. Za prikaz sajta potrebno je omogućiti JavaScript.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

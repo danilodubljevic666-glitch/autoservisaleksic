@@ -1,46 +1,32 @@
 import CountUp from './CountUp';
 import { useInView } from '../hooks/useInView';
+import { useLanguage } from '../i18n/LanguageContext';
 
-const features = [
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: 'Certificirani Tehničari',
-    desc: 'Naš tim čine obučeni i iskusni mehaničari sa dugogodišnjom praksom.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-    title: 'Brza Usluga',
-    desc: 'Poštujemo Vaše vrijeme. Servis obavljamo brzo i efikasno bez kompromisa u kvalitetu.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: 'Povoljne Cijene',
-    desc: 'Konkurentne cijene uz garanciju kvalitetno obavljenog posla i originalnih dijelova.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    title: 'Prijatan Odnos',
-    desc: 'Sa svakim klijentom gradimo dugoročno povjerenje i transparentnost u komunikaciji.',
-  },
+const featureIcons = [
+  (
+    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  (
+    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+  ),
+  (
+    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  (
+    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  ),
 ];
 
 export default function ONama() {
+  const { t } = useLanguage();
   const [headingRef, headingInView] = useInView(0.3);
   const [textRef, textInView] = useInView(0.15);
   const [imgRef, imgInView] = useInView(0.15);
@@ -60,13 +46,13 @@ export default function ONama() {
           className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
         >
           <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
-            Ko smo mi
+            {t.oNama.kicker}
           </span>
           <h2
             id="o-nama-heading"
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-5"
           >
-            O Nama
+            {t.oNama.heading}
           </h2>
           <div className="w-14 sm:w-16 h-1 bg-red-600 mx-auto" />
         </div>
@@ -79,26 +65,26 @@ export default function ONama() {
             className={`order-2 lg:order-1 ${textInView ? 'anim-fade-left' : 'opacity-0'}`}
           >
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-5 leading-snug">
-              Miloš Aleksić —{' '}
-              <span className="text-red-600">stručnjak kome možete vjerovati</span>
+              {t.oNama.subheadingPrefix}{' '}
+              <span className="text-red-600">{t.oNama.subheadingHighlight}</span>
             </h3>
             <p className="text-gray-600 text-base sm:text-lg mb-4 leading-relaxed">
-              Auto Servis Aleksić je porodični servis smješten u srcu Nikšića, koji s ponosom
-              radi već više od <strong className="text-gray-800">5 godina</strong>. Osnivač i vlasnik{' '}
-              <strong className="text-gray-800">Miloš Aleksić</strong> svoje znanje i strast
-              prema automobilima pretvorio je u moderni servis kojemu se klijenti uvijek rado vraćaju.
+              {t.oNama.paragraph1Before}{' '}
+              <strong className="text-gray-800">{t.oNama.paragraph1Strong1}</strong>
+              {t.oNama.paragraph1Middle}{' '}
+              <strong className="text-gray-800">{t.oNama.paragraph1Strong2}</strong>{' '}
+              {t.oNama.paragraph1After}
             </p>
             <p className="text-gray-600 text-base sm:text-lg mb-8 leading-relaxed">
-              Opremljeni savremenom dijagnostičkom opremom i bogatim iskustvom na svim vrstama vozila,
-              garantujemo brzu, preciznu i ekonomičnu uslugu. Svaki automobil tretiramo kao vlastiti.
+              {t.oNama.paragraph2}
             </p>
 
             {/* Stats pills */}
             <div className="grid grid-cols-3 gap-3 sm:gap-4">
               {[
-                { value: 5, suffix: '+', label: 'Godina iskustva', red: true },
-                { value: 500, suffix: '+', label: 'Zadovoljnih klijenata', red: false },
-                { value: 24, suffix: 'h', label: 'Hitni slučajevi', red: false },
+                { value: 5, suffix: '+', label: t.oNama.stats[0].label, red: true },
+                { value: 500, suffix: '+', label: t.oNama.stats[1].label, red: false },
+                { value: 24, suffix: 'h', label: t.oNama.stats[2].label, red: false },
               ].map((stat, i) => (
                 <div
                   key={i}
@@ -125,7 +111,7 @@ export default function ONama() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
               <img
                 src="/radionica.jpg"
-                alt="Auto Servis Aleksić radionica u Nikšiću"
+                alt={t.oNama.imageAlt}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -135,12 +121,12 @@ export default function ONama() {
             {/* Bottom-left badge */}
             <div className="absolute -bottom-6 left-2 sm:left-0 sm:-bottom-5 sm:-left-5 bg-red-600 text-white rounded-2xl px-4 sm:px-6 py-3 sm:py-4 shadow-xl z-10">
               <p className="font-extrabold text-2xl sm:text-3xl leading-none">5★</p>
-              <p className="text-red-200 text-xs font-medium mt-1">Ocjena klijenata</p>
+              <p className="text-red-200 text-xs font-medium mt-1">{t.oNama.ratingLabel}</p>
             </div>
 
             {/* Top-right badge */}
             <div className="absolute -top-4 right-2 sm:right-0 sm:-top-4 sm:-right-4 bg-white rounded-xl px-3 sm:px-4 py-2 sm:py-3 shadow-lg border border-gray-100 z-10">
-              <p className="text-gray-900 font-bold text-xs sm:text-sm">📍 Nikšić, CG</p>
+              <p className="text-gray-900 font-bold text-xs sm:text-sm">📍 {t.oNama.locationBadge}</p>
             </div>
           </div>
         </div>
@@ -152,36 +138,15 @@ export default function ONama() {
             className={`text-center mb-10 ${reviewsInView ? 'anim-fade-up' : 'opacity-0'}`}
           >
             <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
-              Iskustva klijenata
+              {t.oNama.reviewsKicker}
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-              Šta kažu naše mušterije
+              {t.oNama.reviewsHeading}
             </h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[
-              {
-                ime: 'Danilo Dubljevič',
-                ocjena: 5,
-                tekst: 'Odličan servis! Doveo sam Golf 6 na dijagnostiku i za sat vremena su pronašli i otklonili kvar. Profesionalan pristup, povoljna cijena. Preporučujem svima!',
-              },
-              {
-                ime: 'Marko Radusinović',
-                ocjena: 5,
-                tekst: 'Miloš je majstor svog zanata. Menjao sam trapove i amortizere — sve urađeno besprijekorno. Vozilo sada vozi kao novo. Definitivno dolazim ponovo.',
-              },
-              {
-                ime: 'Zoran Mijušković',
-                ocjena: 5,
-                tekst: 'Brza usluga i poštena cijena. Ostavio sam auto ujutru, uzeo poslijepodne potpuno servisiran. Komunikacija odlična, sve objašnjeno do detalja.',
-              },
-              {
-                ime: 'Veljko Nikčević',
-                ocjena: 5,
-                tekst: 'Već tri godine dovodim ovdje sva svoja vozila. Uvijek isti kvalitet i ljubaznost. Nema iznenađenja na računu — cijena je uvijek onakva kakva je dogovorena.',
-              },
-            ].map((r, i) => (
+            {t.oNama.reviews.map((r, i) => (
               <div
                 key={i}
                 style={{ animationDelay: `${i * 120}ms` }}
@@ -190,7 +155,7 @@ export default function ONama() {
               >
                 {/* Stars */}
                 <div className="flex gap-0.5">
-                  {Array.from({ length: r.ocjena }).map((_, j) => (
+                  {Array.from({ length: 5 }).map((_, j) => (
                     <svg key={j} className="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
@@ -205,7 +170,7 @@ export default function ONama() {
                   </div>
                   <div>
                     <p className="text-gray-900 font-semibold text-sm">{r.ime}</p>
-                    <p className="text-gray-400 text-xs">Potvrđeni klijent</p>
+                    <p className="text-gray-400 text-xs">{t.oNama.confirmedClient}</p>
                   </div>
                 </div>
               </div>
@@ -218,7 +183,7 @@ export default function ONama() {
           ref={featuresRef}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
-          {features.map((f, i) => (
+          {t.oNama.features.map((f, i) => (
             <div
               key={i}
               style={{ animationDelay: `${i * 100}ms` }}
@@ -226,7 +191,7 @@ export default function ONama() {
                 ${featuresInView ? 'anim-fade-up' : 'opacity-0'}`}
             >
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-red-100 group-hover:bg-red-600 text-red-600 group-hover:text-white rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300">
-                {f.icon}
+                {featureIcons[i]}
               </div>
               <h4 className="font-bold text-gray-900 mb-2 text-base sm:text-lg">{f.title}</h4>
               <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>

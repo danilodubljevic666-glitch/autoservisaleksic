@@ -1,6 +1,7 @@
 import { useInView } from '../hooks/useInView';
+import { useLanguage } from '../i18n/LanguageContext';
 
-const usluge = [
+const uslugeMeta = [
   {
     icon: (
       <svg className="w-9 h-9 sm:w-10 sm:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -8,17 +9,7 @@ const usluge = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
-    title: 'Mehanika',
     boja: 'red',
-    kratakOpis: 'Popravka i zamjena svih mehaničkih dijelova',
-    stavke: [
-      'Popravka motora i mjenjača',
-      'Zamjena kočnica i diskova',
-      'Popravka sistema hlađenja',
-      'Zamjena zupčastih kaiševa',
-      'Popravka sistema goriva',
-      'Generalni remont vozila',
-    ],
   },
   {
     icon: (
@@ -26,17 +17,7 @@ const usluge = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
-    title: 'Dijagnostika',
     boja: 'blue',
-    kratakOpis: 'Kompjuterska dijagnostika svih sistema vozila',
-    stavke: [
-      'OBD2 kompjuterska dijagnostika',
-      'Čitanje i brisanje grešaka',
-      'Dijagnostika ABS sistema',
-      'Dijagnostika airbag sistema',
-      'Kalibracija elektronike',
-      'Provjera senzora i aktuatora',
-    ],
   },
   {
     icon: (
@@ -44,17 +25,7 @@ const usluge = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
       </svg>
     ),
-    title: 'Servisi',
     boja: 'green',
-    kratakOpis: 'Redovni i vanredni servisni pregledi',
-    stavke: [
-      'Zamjena motornog ulja i filtera',
-      'Zamjena filtera vazduha i klime',
-      'Servis mjenjača i kočnica',
-      'Provjera tečnosti i pritiska',
-      'Servis klimatizacije',
-      'Tehnički pregled priprema',
-    ],
   },
   {
     icon: (
@@ -62,17 +33,7 @@ const usluge = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
       </svg>
     ),
-    title: 'Trapovi',
     boja: 'orange',
-    kratakOpis: 'Popravka i podešavanje sistema vožnje',
-    stavke: [
-      'Zamjena amortizera i opruga',
-      'Popravka ležajeva točkova',
-      'Zamjena stabilizatora',
-      'Geometrija i poravnanje točkova',
-      'Zamjena nastavaka i karike',
-      'Balansiranje točkova',
-    ],
   },
 ];
 
@@ -84,6 +45,7 @@ const bojaMap = {
 };
 
 export default function Usluge() {
+  const { t } = useLanguage();
   const [headingRef, headingInView] = useInView(0.3);
   const [cardsRef, cardsInView] = useInView(0.05);
   const [ctaRef, ctaInView] = useInView(0.2);
@@ -101,18 +63,17 @@ export default function Usluge() {
           className={`text-center mb-12 sm:mb-16 ${headingInView ? 'anim-fade-up' : 'opacity-0'}`}
         >
           <span className="inline-block text-red-600 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
-            Šta nudimo
+            {t.usluge.kicker}
           </span>
           <h2
             id="usluge-heading"
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-5"
           >
-            Naše Usluge
+            {t.usluge.heading}
           </h2>
           <div className="w-14 sm:w-16 h-1 bg-red-600 mx-auto mb-5" />
           <p className="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg px-2">
-            Pružamo kompletan spektar auto-servisnih usluga. Sve na jednom mjestu,
-            sa garantovanim kvalitetom i povoljnim cijenama.
+            {t.usluge.intro}
           </p>
         </div>
 
@@ -121,8 +82,8 @@ export default function Usluge() {
           ref={cardsRef}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
-          {usluge.map((u, i) => {
-            const c = bojaMap[u.boja];
+          {t.usluge.items.map((u, i) => {
+            const c = bojaMap[uslugeMeta[i].boja];
             return (
               <article
                 key={i}
@@ -132,7 +93,7 @@ export default function Usluge() {
                 aria-label={u.title}
               >
                 <div className={`${c.icon} text-white w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-5 shadow-md flex-shrink-0`}>
-                  {u.icon}
+                  {uslugeMeta[i].icon}
                 </div>
 
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{u.title}</h3>
@@ -155,7 +116,7 @@ export default function Usluge() {
                   }}
                   className={`inline-block mt-5 text-xs sm:text-sm font-semibold ${c.tag} px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all duration-200 hover:opacity-80 self-start`}
                 >
-                  Naručite →
+                  {t.usluge.orderCta}
                 </a>
               </article>
             );
@@ -170,10 +131,10 @@ export default function Usluge() {
         >
           <div className="flex-1">
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">
-              Niste sigurni šta vam treba?
+              {t.usluge.ctaHeading}
             </h3>
             <p className="text-gray-400 text-sm sm:text-base">
-              Pozovite nas i naš tim će Vam pomoći savjetom besplatno.
+              {t.usluge.ctaText}
             </p>
           </div>
           <a
